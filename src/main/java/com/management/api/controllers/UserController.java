@@ -59,7 +59,7 @@ public class UserController {
   }
 
   @Operation(description="Returns an list of Users based on the identification (CPF or RG) passsed")
-  @GetMapping("/search")
+  @GetMapping("/consult")
   public ResponseEntity<Optional<User>> searchUser(@RequestParam String identification) {
     Optional<User> findByCpf = userRepository.findByCpf(identification);
     Optional<User> findByRg = userRepository.findByRg(identification);
@@ -74,7 +74,7 @@ public class UserController {
   }
 
   @Operation(description="Returns an list of Users based on the name passsed")
-  @GetMapping("/search/name")
+  @GetMapping("/search")
   public ResponseEntity<List<User>> searchByName(@RequestParam String name) {
     try {
       List<User> list = userRepository.findAll();
