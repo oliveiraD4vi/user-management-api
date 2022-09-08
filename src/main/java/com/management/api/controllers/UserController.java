@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.management.api.database.UserRepository;
 import com.management.api.models.User;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api")
+@Api(value="API REST Users")
 public class UserController {
   
   private final UserRepository userRepository;
@@ -28,6 +34,7 @@ public class UserController {
     this.userRepository = userRepository;
   }
 
+  @ApiOperation(value="Returns an User based on the Id passsed")
   @GetMapping("/user")
   public ResponseEntity<Optional<User>> user(@RequestParam long id) {
     try {
@@ -39,6 +46,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Deletes an User based on the Id passsed")
   @DeleteMapping("/user")
   public ResponseEntity<Boolean> deleteUser(@RequestParam long id) {
     try {
@@ -50,6 +58,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Returns an list of Users based on the identification (CPF or RG) passsed")
   @GetMapping("/search")
   public ResponseEntity<Optional<User>> searchUser(@RequestParam String identification) {
     Optional<User> findByCpf = userRepository.findByCpf(identification);
@@ -64,6 +73,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Returns an list of Users based on the name passsed")
   @GetMapping("/search/name")
   public ResponseEntity<List<User>> searchByName(@RequestParam String name) {
     try {
@@ -82,6 +92,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Register an User")
   @PostMapping("/user")
   public ResponseEntity<User> registerUser(@RequestBody User user) {
     try {
@@ -93,6 +104,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Update an user data")
   @PutMapping("/user")
   public ResponseEntity<User> editUser(@RequestBody User user) {
     try {
@@ -104,6 +116,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation(value="Returns the list of all Users registered")
   @GetMapping("/list")
   public ResponseEntity<List<User>> listUsers() {
     try {
