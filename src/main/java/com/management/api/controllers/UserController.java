@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -123,11 +127,13 @@ public class UserController {
     }
   }
 
-  @Operation(description="Returns the list of all Users registered")
+  @Operation(description="Returns list of Users")
   @GetMapping("/list")
-  public ResponseEntity<List<User>> listUsers() {
+  public ResponseEntity<Page<User>> listUsers(@RequestParam int page, @RequestParam int size) {
     try {
-      List<User> list = userRepository.findAll();
+      Sort sort = Sort.by("id").ascending();
+      Pageable pageable = PageRequest.of(page-1, size, sort);
+      Page<User> list = userRepository.findAll(pageable);
 
       return ResponseEntity.status(HttpStatus.OK).body(list);
     } catch (Exception e) {
