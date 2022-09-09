@@ -1,5 +1,5 @@
 
-# User Management App
+# User Management Api
 
 This is an app for simple user management using an Postgres database.
 
