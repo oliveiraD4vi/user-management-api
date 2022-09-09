@@ -24,9 +24,9 @@ public class User implements Serializable {
   private long id;
   @Column(nullable = false)
   private String name;
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String cpf;
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String rg;
   @Column(nullable = false)
   private Date bornAt;
