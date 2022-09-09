@@ -95,6 +95,13 @@ public class UserController {
   @Operation(description="Register an User")
   @PostMapping("/user")
   public ResponseEntity<User> registerUser(@RequestBody User user) {
+    Optional<User> findByCpf = userRepository.findByCpf(user.getCpf());
+    Optional<User> findByRg = userRepository.findByRg(user.getRg());
+
+    if (!findByCpf.isEmpty() || !findByRg.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
     try {
       userRepository.save(user);
 
